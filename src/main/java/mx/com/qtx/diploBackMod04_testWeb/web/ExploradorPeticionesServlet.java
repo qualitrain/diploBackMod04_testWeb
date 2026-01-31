@@ -27,6 +27,7 @@ public class ExploradorPeticionesServlet extends HttpServlet {
         System.out.println("ctx.getClass().getName() = " + ctx.getClass().getName());
         System.out.println("\nRecursos de la aplicacion:");
         mostrarTodoslosRecursos(ctx);
+        mostrarServletsRegistrados(ctx);
 
         String nomArcProps = "miApp.properties";
         final Properties props = getProperties(ctx, nomArcProps);

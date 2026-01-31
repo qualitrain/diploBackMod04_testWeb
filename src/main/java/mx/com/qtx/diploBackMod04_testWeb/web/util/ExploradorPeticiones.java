@@ -1,6 +1,7 @@
 package mx.com.qtx.diploBackMod04_testWeb.web.util;
 
 import jakarta.servlet.ServletContext;
+import jakarta.servlet.ServletRegistration;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.*;
@@ -59,5 +60,22 @@ public class ExploradorPeticiones {
                 mostrarRecursosRecursivamente(ctx,recursoI);
         }
 
+    }
+
+    public static void mostrarServletsRegistrados(ServletContext ctx) {
+        System.out.println("\n4. 🚀 SERVLETS REGISTRADOS");
+        Map<String, ? extends ServletRegistration> servlets = ctx.getServletRegistrations();
+
+        if (servlets == null || servlets.isEmpty()) {
+            System.out.println("   No hay servlets registrados programáticamente");
+            return;
+        }
+
+        servlets.forEach((nombreServlet, reg) -> {
+            System.out.printf("   📌 %s%n", nombreServlet);
+            System.out.printf("      Clase: %s%n", reg.getClassName());
+            System.out.printf("      Mappings: %s%n", reg.getMappings());
+
+        });
     }
 }

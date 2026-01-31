@@ -9,10 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Enumeration;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import static mx.com.qtx.diploBackMod04_testWeb.web.util.ExploradorPeticiones.*;
 
@@ -28,11 +25,23 @@ public class ExploradorPeticionesServlet extends HttpServlet {
         System.out.println("\n--- Explorando el contexto de la Aplicación ---");
         ServletContext ctx = req.getServletContext();
         System.out.println("ctx.getClass().getName() = " + ctx.getClass().getName());
-        System.out.println("\nRecursos de la aplicacion");
+        System.out.println("\nRecursos de la aplicacion:");
         mostrarTodoslosRecursos(ctx);
 
-//        Set<String> recursos = ctx.getResourcePaths("/");
-//        recursos.forEach(recI->System.out.printf("%s%n",recI));
+        String nomArcProps = "miApp.properties";
+        final Properties props = getProperties(ctx, nomArcProps);
+
+        System.out.println("\n" + "-".repeat(15) + "Propiedades " + "-".repeat(15));
+        props.stringPropertyNames()
+                .forEach(propI->System.out.printf("%15s : %s%n",propI, props.getProperty(propI)));
+        System.out.println("-".repeat(42));
+
+    }
+
+    private static Properties getProperties(ServletContext ctx, String nomArcProps) throws IOException {
+        Properties props = new Properties();
+        props.load(ctx.getResourceAsStream("/WEB-INF/classes/" + nomArcProps));
+        return props;
     }
 
 

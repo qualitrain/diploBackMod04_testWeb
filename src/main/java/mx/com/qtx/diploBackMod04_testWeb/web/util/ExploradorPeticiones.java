@@ -1,11 +1,9 @@
 package mx.com.qtx.diploBackMod04_testWeb.web.util;
 
+import jakarta.servlet.ServletContext;
 import jakarta.servlet.http.HttpServletRequest;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Enumeration;
-import java.util.List;
+import java.util.*;
 
 public class ExploradorPeticiones {
     public static void mostrarCabecerasHttpConValores(HttpServletRequest req) {
@@ -47,5 +45,19 @@ public class ExploradorPeticiones {
         System.out.println("req.getScheme() = " + req.getScheme());
         System.out.println("req.getProtocol() = " + req.getProtocol());
         System.out.println("req.isSecure() = " + req.isSecure());
+    }
+
+    public static void mostrarTodoslosRecursos(ServletContext ctx) {
+        mostrarRecursosRecursivamente(ctx,"/");
+    }
+
+    private static void mostrarRecursosRecursivamente(ServletContext ctx, String raiz) {
+        Set<String> setRecursos = ctx.getResourcePaths(raiz);
+        for(String recursoI:setRecursos){
+            System.out.printf("     • %s%n", recursoI);
+            if(recursoI.endsWith("/"))
+                mostrarRecursosRecursivamente(ctx,recursoI);
+        }
+
     }
 }

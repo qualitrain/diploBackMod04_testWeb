@@ -20,6 +20,8 @@ public class ExploradorPeticionesServlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         mostrarCabecerasHttpConValores(req);
+        mostrarDatosAgente(req);
+        mostrarDatosServidor(req);
     }
 
 

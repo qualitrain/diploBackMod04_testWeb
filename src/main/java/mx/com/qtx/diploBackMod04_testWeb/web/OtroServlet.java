@@ -1,5 +1,6 @@
 package mx.com.qtx.diploBackMod04_testWeb.web;
 
+import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -22,6 +23,17 @@ public class OtroServlet extends HttpServlet {
         out.println("<p>y también funcionando correctamente</p>");
         out.println("<h4>" + ++this.nPeticion +
                 "</h4>");
+        RequestDispatcher despachadorPeticiones = req.getRequestDispatcher("/patinio");
+        req.setAttribute("numPeticion", this.nPeticion);
+  //        despachadorPeticiones.forward(req,response);
+ //         despachadorPeticiones.include(req,response);
+
+        String rutaCtx = req.getContextPath();
+        response.sendRedirect(rutaCtx + "/patinio");
+        System.out.println("<p>He regresado al servlet invocador");
+        out.println("Ya concluyo invocación del Servlet Subordinado y tenemos un atributo nuevo:"
+                + req.getAttribute("cuadrado") + "</p>");
+
     }
 }
 

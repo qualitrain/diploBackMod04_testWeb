@@ -1,4 +1,4 @@
-package mx.com.qtx.diploBackMod04_testWeb.web;
+package mx.com.qtx.diploBackMod04_testWeb.web.demosHttp;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -9,15 +9,18 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.PrintWriter;
 
-@WebServlet("/test")
-public class BasicServlet extends HttpServlet {
+@WebServlet("/patinio")
+public class PatinioServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse response)
             throws ServletException, IOException {
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();
-        out.println("<h1>Tomcat 10.1 - Jakarta EE 10</h1>");
-        out.println("<p>Servlet funcionando correctamente</p>");
+        out.println("<h1>Servlet Subordinado</h1>");
+        out.println("<p>Y funcionando correctamente</p>");
+        long nPeticion = (long) req.getAttribute("numPeticion");
+        out.println("<p>He recibido estos datos:" + nPeticion + "</p>");
+        req.setAttribute("cuadrado", nPeticion * nPeticion);
     }
 }
 

@@ -4,6 +4,7 @@ import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletRegistration;
 import jakarta.servlet.http.HttpServletRequest;
 
+import java.io.IOException;
 import java.util.*;
 
 public class ExploradorPeticiones {
@@ -88,4 +89,5 @@ public class ExploradorPeticiones {
             System.out.printf("%20s : %s%n", nombreI, req.getParameter(nombreI));
         }
     }
+
 }

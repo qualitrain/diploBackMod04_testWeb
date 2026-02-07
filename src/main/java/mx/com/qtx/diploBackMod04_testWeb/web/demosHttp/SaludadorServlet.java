@@ -1,4 +1,4 @@
-package mx.com.qtx.diploBackMod04_testWeb.web;
+package mx.com.qtx.diploBackMod04_testWeb.web.demosHttp;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

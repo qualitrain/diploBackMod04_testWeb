@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CRUD Personas - Servidor</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h1, h2 {
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3498db;
+        }
+
+        .section {
+            margin-bottom: 30px;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input[type="text"],
+        input[type="date"],
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        input:read-only {
+            background-color: #f9f9f9;
+            color: #777;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        button, input[type="submit"] {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: bold;
+        }
+
+        .btn-create {
+            background-color: #2ecc71;
+            color: white;
+        }
+
+        .btn-update {
+            background-color: #3498db;
+            color: white;
+        }
+
+        .btn-delete {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        .btn-clear {
+            background-color: #95a5a6;
+            color: white;
+        }
+
+        .btn-search {
+            background-color: #f39c12;
+            color: white;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #3498db;
+            color: white;
+        }
+
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .actions-cell {
+            text-align: center;
+        }
+
+        .btn-select {
+            background-color: #9b59b6;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        .message {
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+            border: 1px solid #bee5eb;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>📋 Gestión de Personas - CRUD Server-Side</h1>
+
+    <!-- Sección para mensajes del servidor -->
+    <!-- Estos mensajes se mostrarían después de una redirección desde el servidor -->
+    <div class="message success" style="display: none;" id="serverMessage">
+        <!-- El contenido se llenaría dinámicamente desde el servidor -->
+    </div>
+
+    <!-- SECCIÓN 1: Formulario CRUD Principal -->
+    <div class="section">
+        <h2>📝 Formulario de Persona</h2>
+
+        <!-- Formulario para CREATE/UPDATE/DELETE -->
+        <form method="POST" action="/api/personas" id="personaForm">
+            <!-- Campo oculto para determinar la acción -->
+            <input type="hidden" name="action" id="action" value="create">
+
+            <div class="form-group">
+                <label for="idPersona">ID Persona:</label>
+                <input type="text" id="idPersona" name="idPersona"
+                       readonly placeholder="Auto-generado en creación">
+            </div>
+
+            <div class="form-group">
+                <label for="nombre">Nombre *</label>
+                <input type="text" id="nombre" name="nombre"
+                       required maxlength="40"
+                       placeholder="Ingrese el nombre (máx. 40 caracteres)">
+            </div>
+
+            <div class="form-group">
+                <label for="direccion">Dirección</label>
+                <input type="text" id="direccion" name="direccion"
+                       maxlength="45"
+                       placeholder="Ingrese la dirección (máx. 45 caracteres)">
+            </div>
+
+            <div class="form-group">
+                <label for="fechaNacimiento">Fecha de Nacimiento</label>
+                <input type="date" id="fechaNacimiento" name="fechaNacimiento">
+            </div>
+
+            <div class="form-actions">
+                <!-- Estos botones cambiarán el campo hidden 'action' y enviarán el formulario -->
+                <button type="submit" class="btn-create"
+                        onclick="document.getElementById('action').value='create'">
+                    Crear Nueva Persona
+                </button>
+
+                <button type="submit" class="btn-update"
+                        onclick="document.getElementById('action').value='update'">
+                    Actualizar Persona
+                </button>
+
+                <button type="submit" class="btn-delete"
+                        onclick="document.getElementById('action').value='delete'">
+                    Eliminar Persona
+                </button>
+
+                <button type="button" class="btn-clear" onclick="clearForm()">
+                    Limpiar Formulario
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- SECCIÓN 2: Búsqueda de Persona -->
+    <div class="section">
+        <h2>🔍 Buscar Persona por ID</h2>
+
+        <!-- Formulario para búsqueda (GET) -->
+        <form method="GET" action="/api/personas" id="searchForm">
+            <div class="form-group">
+                <label for="searchId">ID de Persona:</label>
+                <input type="number" id="searchId" name="id"
+                       min="1" placeholder="Ingrese el ID a buscar">
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn-search">
+                    Buscar Persona
+                </button>
+
+                <button type="button" class="btn-clear"
+                        onclick="window.location.href='/'">
+                    Ver Todas las Personas
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- SECCIÓN 3: Lista de Personas -->
+    <div class="section">
+        <h2>👥 Lista de Personas Registradas</h2>
+
+        <!-- Tabla para mostrar resultados -->
+        <table id="personasTable">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Dirección</th>
+                <th>Fecha Nacimiento</th>
+                <th class="actions-cell">Acción</th>
+            </tr>
+            </thead>
+            <tbody>
+            <!--
+            Esta tabla se llenaría desde el servidor.
+            Ejemplo de fila que generaría el servidor:
+
+            <tr>
+                <td>1</td>
+                <td>Juan Pérez</td>
+                <td>Calle Principal 123</td>
+                <td>1990-05-15</td>
+                <td class="actions-cell">
+                    <form method="GET" action="/api/personas" style="display: inline;">
+                        <input type="hidden" name="id" value="1">
+                        <button type="submit" class="btn-select">Seleccionar</button>
+                    </form>
+                </td>
+            </tr>
+            -->
+            <tr>
+                <td colspan="5" style="text-align: center;">
+                    Los datos se cargarán desde el servidor
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <!-- Formulario para cargar todas las personas -->
+        <div style="margin-top: 20px;">
+            <form method="GET" action="/">
+                <button type="submit" class="btn-create">
+                    Cargar Todas las Personas
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Mínimo JavaScript necesario -->
+<script>
+    // Función para limpiar el formulario
+    function clearForm() {
+        document.getElementById('personaForm').reset();
+        document.getElementById('idPersona').value = '';
+        document.getElementById('action').value = 'create';
+    }
+
+    // Función para cargar datos en el formulario (se llamaría desde el servidor)
+    // Esta función podría ser generada dinámicamente por el servidor
+    // cuando envía la página con datos específicos
+    function loadPersonaToForm(persona) {
+        if (persona) {
+            document.getElementById('idPersona').value = persona.idPersona || '';
+            document.getElementById('nombre').value = persona.nombre || '';
+            document.getElementById('direccion').value = persona.direccion || '';
+            document.getElementById('fechaNacimiento').value = persona.fechaNacimiento || '';
+            document.getElementById('action').value = 'update';
+        }
+    }
+
+    // Mostrar mensajes del servidor si existen
+    // Este bloque se ejecutaría si el servidor incluye mensajes en la página
+    window.onload = function() {
+        // Ejemplo de cómo el servidor podría pasar datos:
+        // Si hay parámetros en la URL, podría indicar una operación exitosa
+        const urlParams = new URLSearchParams(window.location.search);
+        const message = urlParams.get('message');
+        const messageType = urlParams.get('messageType');
+
+        if (message) {
+            const messageDiv = document.getElementById('serverMessage');
+            messageDiv.textContent = decodeURIComponent(message);
+            messageDiv.className = `message ${messageType || 'info'}`;
+            messageDiv.style.display = 'block';
+
+            // Ocultar mensaje después de 5 segundos
+            setTimeout(() => {
+                messageDiv.style.display = 'none';
+            }, 5000);
+        }
+    };
+</script>
+</body>
+</html>

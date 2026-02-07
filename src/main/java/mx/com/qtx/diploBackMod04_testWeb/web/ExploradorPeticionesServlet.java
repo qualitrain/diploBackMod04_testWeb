@@ -49,7 +49,7 @@ public class ExploradorPeticionesServlet extends HttpServlet {
 
     }
 
-    private static void mostraParametrosPeticion(HttpServletRequest req) {
+    public static void mostraParametrosPeticion(HttpServletRequest req) {
         Enumeration<String> nombresParametros = req.getParameterNames();
         System.out.println("\n---- Parámetros en la Petición -----");
         System.out.println("req.getQueryString() = " + req.getQueryString());

@@ -78,4 +78,14 @@ public class ExploradorPeticiones {
 
         });
     }
+
+    public static void mostraParametrosPeticion(HttpServletRequest req) {
+        Enumeration<String> nombresParametros = req.getParameterNames();
+        System.out.println("\n---- Parámetros en la Petición -----");
+        System.out.println("req.getQueryString() = " + req.getQueryString());
+        while(nombresParametros.hasMoreElements()){
+            String nombreI = nombresParametros.nextElement();
+            System.out.printf("%20s : %s%n", nombreI, req.getParameter(nombreI));
+        }
+    }
 }

@@ -1,4 +1,4 @@
-package mx.com.qtx.diploBackMod04_testWeb.web.util;
+package mx.com.qtx.diploBackMod04_testWeb.web;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -8,7 +8,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLOutput;
 import java.util.Currency;
 import java.util.Locale;
 

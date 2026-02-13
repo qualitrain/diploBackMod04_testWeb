@@ -1,4 +1,4 @@
-package mx.com.qtx.diploBackMod04_testWeb.web.demoCookies;
+package mx.com.qtx.diploBackMod04_testWeb.web.b01_demoCookies;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;

@@ -36,7 +36,8 @@ public class RuteadorServlet extends HttpServlet {
                 this.despachador.include(req,response);
             }
             case "redirect" -> {
-                req.setAttribute("operacion","redirect = aviso al navegador de que re-envíe la petición a otro componente");
+                this.getServletContext().setAttribute("operacion","redirect = aviso al navegador de que re-envíe la petición a otro componente");
+//                req.setAttribute("operacion","redirect = aviso al navegador de que re-envíe la petición a otro componente");
                 response.sendRedirect("./destino1");
             }
         }

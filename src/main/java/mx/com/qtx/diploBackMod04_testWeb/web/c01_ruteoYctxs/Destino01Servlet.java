@@ -15,7 +15,13 @@ public class Destino01Servlet extends HttpServlet {
     protected void doGet(HttpServletRequest req, HttpServletResponse response)
             throws ServletException, IOException {
         String operacion = (String) req.getAttribute("operacion");
-        operacion = operacion == null ? "No existe el atributo operacion" : operacion;
+//        operacion = operacion == null ? "No existe el atributo operacion" : operacion;
+        if(operacion == null){
+            operacion = (String) this.getServletContext().getAttribute("operacion");
+            if(operacion == null){
+                operacion = "No existe el atributo operacion";
+            }
+        }
 
         response.setContentType("text/html");
         PrintWriter out = response.getWriter();

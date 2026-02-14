@@ -6,6 +6,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -36,7 +37,9 @@ public class RuteadorServlet extends HttpServlet {
                 this.despachador.include(req,response);
             }
             case "redirect" -> {
-                this.getServletContext().setAttribute("operacion","redirect = aviso al navegador de que re-envíe la petición a otro componente");
+                HttpSession sesion = req.getSession(true);
+                sesion.setAttribute("operacion","redirect = aviso al navegador de que re-envíe la petición a otro componente");
+//                this.getServletContext().setAttribute("operacion","redirect = aviso al navegador de que re-envíe la petición a otro componente");
 //                req.setAttribute("operacion","redirect = aviso al navegador de que re-envíe la petición a otro componente");
                 response.sendRedirect("./destino1");
             }

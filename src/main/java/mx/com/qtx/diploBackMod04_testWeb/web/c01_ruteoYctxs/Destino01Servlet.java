@@ -5,6 +5,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -17,10 +18,8 @@ public class Destino01Servlet extends HttpServlet {
         String operacion = (String) req.getAttribute("operacion");
 //        operacion = operacion == null ? "No existe el atributo operacion" : operacion;
         if(operacion == null){
-            operacion = (String) this.getServletContext().getAttribute("operacion");
-            if(operacion == null){
-                operacion = "No existe el atributo operacion";
-            }
+            operacion = getOperacionDesdeSesion(req);
+//            operacion = (String) this.getServletContext().getAttribute("operacion");
         }
 
         response.setContentType("text/html");
@@ -30,6 +29,19 @@ public class Destino01Servlet extends HttpServlet {
 
         out.println("<p><strong>operacion:</strong>");
         out.println(operacion + "</p>");
+    }
+
+    private static String getOperacionDesdeSesion(HttpServletRequest req) {
+        String operacion;
+        HttpSession sesion = req.getSession(false);
+        if(sesion == null){
+            operacion = "No existe el atributo operacion";
+        }
+        else{
+            operacion = (String) sesion.getAttribute("operacion");
+        }
+        operacion = operacion == null ? "No existe el atributo operacion" : operacion;
+        return operacion;
     }
 }
 

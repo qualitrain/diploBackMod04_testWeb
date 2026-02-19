@@ -31,7 +31,12 @@ public class ContadorPeticionesHttpSesionServlet extends HttpServlet {
         }
         else{
             mensaje = "Es una sesión que ya conocía, su id = " + sesion.getId();
-            nPeticiones = (int) sesion.getAttribute("nPeticiones");
+            if(sesion.getAttribute("nPeticiones")!=null){
+                nPeticiones = (int)sesion.getAttribute("nPeticiones");
+            }
+            else{
+                nPeticiones = 0;
+            }
             nPeticiones++;
             sesion.setAttribute("nPeticiones",nPeticiones);
         }

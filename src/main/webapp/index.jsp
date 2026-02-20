@@ -20,6 +20,7 @@ Clase:<%=session.getClass().getName()%><br>
 Id:<%=session.getId()%><br>
 </p>
 <h3>Operacion:<%=request.getAttribute("operacion")%></h3>
+<h4>Operacion (con un placeholder en JSP EL): ${operacion} </h4>
 <a href="./navega">Ir al menú</a>
 </body>
 </html>

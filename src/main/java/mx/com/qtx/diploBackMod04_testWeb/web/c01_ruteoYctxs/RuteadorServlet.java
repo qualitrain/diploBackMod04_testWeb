@@ -14,11 +14,13 @@ import java.io.PrintWriter;
 @WebServlet("/navega")
 public class RuteadorServlet extends HttpServlet {
     private RequestDispatcher despachador;
+    private RequestDispatcher despachadorJsp;
 
     @Override
     public void init() throws ServletException {
         super.init();
         this.despachador = this.getServletContext().getRequestDispatcher("/destino1");
+        this.despachadorJsp = this.getServletContext().getRequestDispatcher("/index.jsp");
     }
 
     @Override
@@ -43,6 +45,14 @@ public class RuteadorServlet extends HttpServlet {
 //                req.setAttribute("operacion","redirect = aviso al navegador de que re-envíe la petición a otro componente");
                 response.sendRedirect("./destino1");
             }
+            case "jsp" -> {
+                req.setAttribute("operacion","forward = delegacion del procesamiento a un Jsp ");
+                this.despachadorJsp.forward(req,response);
+            }
+            case "jspInclude" -> {
+                req.setAttribute("operacion","include = integración del procesamiento de otro servlet ");
+                this.despachadorJsp.include(req,response);
+            }
         }
 
         response.setContentType("text/html");
@@ -51,6 +61,8 @@ public class RuteadorServlet extends HttpServlet {
         out.println("<a href='./navega?destino=forward'>Ir a destino1 (forward)</a><br>");
         out.println("<a href='./navega?destino=include'>Ir a destino1 (include)</a><br>");
         out.println("<a href='./navega?destino=redirect'>Ir a destino1 (redirect)</a><br>");
+        out.println("<a href='./navega?destino=jsp'>Ir al jsp (forward)</a><br>");
+        out.println("<a href='./navega?destino=jspInclude'>Ir al jsp (include)</a><br>");
     }
 }
 

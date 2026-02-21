@@ -1,4 +1,4 @@
-package mx.com.qtx.diploBackMod04_testWeb.web;
+package mx.com.qtx.diploBackMod04_testWeb.servicios;
 
 import mx.com.qtx.diploBackMod04_testWeb.entidades.Persona;
 

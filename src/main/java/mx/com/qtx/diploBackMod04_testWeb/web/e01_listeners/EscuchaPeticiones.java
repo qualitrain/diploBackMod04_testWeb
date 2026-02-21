@@ -1,6 +1,5 @@
-package mx.com.qtx.diploBackMod04_testWeb.web.listeners;
+package mx.com.qtx.diploBackMod04_testWeb.web.e01_listeners;
 
-import jakarta.servlet.ServletRequest;
 import jakarta.servlet.ServletRequestAttributeListener;
 import jakarta.servlet.ServletRequestEvent;
 import jakarta.servlet.ServletRequestListener;

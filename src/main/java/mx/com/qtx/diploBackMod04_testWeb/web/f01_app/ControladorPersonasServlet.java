@@ -1,4 +1,4 @@
-package mx.com.qtx.diploBackMod04_testWeb.web;
+package mx.com.qtx.diploBackMod04_testWeb.web.f01_app;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -7,16 +7,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import mx.com.qtx.diploBackMod04_testWeb.config.ConfiguracionApp;
 import mx.com.qtx.diploBackMod04_testWeb.entidades.Persona;
-import mx.com.qtx.diploBackMod04_testWeb.web.util.ExploradorPeticiones;
+import mx.com.qtx.diploBackMod04_testWeb.servicios.IGestorBD;
 import mx.com.qtx.diploBackMod04_testWeb.web.util.UtilWeb;
 
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.sql.SQLOutput;
 import java.util.Properties;
 
-@WebServlet("/personas")
+//@WebServlet("/personas")
 public class ControladorPersonasServlet extends HttpServlet {
 
     private IGestorBD gestorBD;
@@ -36,6 +35,10 @@ public class ControladorPersonasServlet extends HttpServlet {
     @Override
     public void init() throws ServletException {
         super.init();
+        cargarGestoBD();
+    }
+
+    private void cargarGestoBD() {
         Properties props = null;
         try {
 

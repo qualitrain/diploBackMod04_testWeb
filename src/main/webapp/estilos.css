@@ -92,8 +92,11 @@
         .btn-clear {
             background-color: #95a5a6;
             color: white;
-        }
 
+        .btn-back {
+            background-color: black;
+            color: white;
+        }
         .btn-search {
             background-color: #f39c12;
             color: white;

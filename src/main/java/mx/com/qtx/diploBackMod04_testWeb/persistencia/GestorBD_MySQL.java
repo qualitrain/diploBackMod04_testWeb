@@ -1,9 +1,8 @@
 package mx.com.qtx.diploBackMod04_testWeb.persistencia;
 
 import mx.com.qtx.diploBackMod04_testWeb.entidades.Persona;
-import mx.com.qtx.diploBackMod04_testWeb.web.IGestorBD;
+import mx.com.qtx.diploBackMod04_testWeb.servicios.IGestorBD;
 
-import java.math.BigDecimal;
 import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;

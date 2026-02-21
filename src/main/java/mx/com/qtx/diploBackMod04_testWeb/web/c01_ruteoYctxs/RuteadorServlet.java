@@ -10,6 +10,8 @@ import jakarta.servlet.http.HttpSession;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.List;
+import java.util.Map;
 
 @WebServlet("/navega")
 public class RuteadorServlet extends HttpServlet {
@@ -47,6 +49,9 @@ public class RuteadorServlet extends HttpServlet {
             }
             case "jsp" -> {
                 req.setAttribute("operacion","forward = delegacion del procesamiento a un Jsp ");
+                Map<String,Integer> mapMeses = Map.of("enero",31,"febrero",28,"marzo",31,"abril",30);
+                req.setAttribute("meses",mapMeses);
+                req.setAttribute("lista", List.of("lunes","martes","miercoles","jueves"));
                 this.despachadorJsp.forward(req,response);
             }
             case "jspInclude" -> {

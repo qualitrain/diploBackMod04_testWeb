@@ -16,7 +16,7 @@
         <!-- Formulario para CREATE/UPDATE/DELETE -->
         <form method="POST" action="./personas" id="personaForm">
             <!-- Campo oculto para determinar la acción -->
-            <input type="hidden" name="action" id="action" value="create">
+            <input type="hidden" name="accion" id="accion" value="create">
 
             <div class="form-group">
                 <label for="idPersona">ID Persona:</label>
@@ -50,12 +50,12 @@
             <div class="form-actions">
 
                 <button type="submit" class="btn-update"
-                        onclick="document.getElementById('action').value='update'">
+                        onclick="document.getElementById('accion').value='update'">
                     Actualizar Persona
                 </button>
 
                 <button type="submit" class="btn-delete"
-                        onclick="document.getElementById('action').value='delete'">
+                        onclick="document.getElementById('accion').value='delete'">
                     Eliminar Persona
                 </button>
 
@@ -64,7 +64,7 @@
                 </button>
 
                 <button type="submit" class="btn-back"
-                                       onclick="document.getElementById('action').value='back'">
+                                       onclick="document.getElementById('accion').value='back'">
                     Regresar
                 </button>
             </div>

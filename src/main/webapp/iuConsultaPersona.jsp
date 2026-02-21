@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CRUD Personas - Servidor</title>
+    <title>Consultar Personas - Servidor</title>
     <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
@@ -15,6 +15,7 @@
 
         <!-- Formulario para búsqueda (GET) -->
         <form method="GET" action="./personas" id="searchForm">
+            <input type="hidden" name="accion" id="accion" value="get">
             <div class="form-group">
                 <label for="searchId">ID de Persona:</label>
                 <input type="number" id="searchId" name="id"
@@ -26,8 +27,8 @@
                     Buscar Persona
                 </button>
 
-                <button type="button" class="btn-clear"
-                        onclick="window.location.href='/'">
+                <button type="submit" class="btn-clear"
+                       onclick="document.getElementById('accion').value='getTodas';document.getElementById('searchId').required=false">
                     Ver Todas las Personas
                 </button>
             </div>

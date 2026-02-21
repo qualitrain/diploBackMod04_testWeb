@@ -10,56 +10,80 @@ import jakarta.servlet.http.HttpServletResponse;
 import mx.com.qtx.diploBackMod04_testWeb.entidades.Persona;
 import mx.com.qtx.diploBackMod04_testWeb.servicios.IGestorBD;
 import mx.com.qtx.diploBackMod04_testWeb.web.util.ExploradorPeticiones;
-import mx.com.qtx.diploBackMod04_testWeb.web.util.UtilWeb;
 
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.SQLException;
+import java.util.List;
 
 @WebServlet("/personas")
 public class PersonasControllerServlet extends HttpServlet {
-    private RequestDispatcher rd;
-    private RequestDispatcher rd2;
+    private RequestDispatcher rdVistaCrudPersona;
+    private RequestDispatcher rdVistaConsultaPersona;
+    private RequestDispatcher rdVistaDespliegaPersonas;
     private IGestorBD gestorBD;
 
     @Override
     public void init() throws ServletException {
         super.init();
         ServletContext ctxApp = this.getServletContext();
-        this.rd = ctxApp.getRequestDispatcher("/iuCrudPersonas.jsp");
-        this.rd2 = ctxApp.getRequestDispatcher("/iuConsultaPersona.jsp");
+        this.rdVistaCrudPersona = ctxApp.getRequestDispatcher("/iuCrudPersonas.jsp");
+        this.rdVistaConsultaPersona = ctxApp.getRequestDispatcher("/iuConsultaPersona.jsp");
+        this.rdVistaDespliegaPersonas = ctxApp.getRequestDispatcher("/iuListaPersonas.jsp");
 
         this.gestorBD = (IGestorBD) ctxApp.getAttribute("gestorBD");
-        UtilWeb.mostrarAtributosCtx(ctxApp);
+//        UtilWeb.mostrarAtributosCtx(ctxApp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ExploradorPeticiones.mostraParametrosPeticion(req);
-        this.rd2.forward(req,resp);
+        this.rdVistaConsultaPersona.forward(req,resp);
     }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse response)
             throws ServletException, IOException {
-//        ExploradorPeticiones.mostraParametrosPeticion(req);
-        
-        int idPersona = this.getIdPersona(req);
-        if(idPersona == -1){
-            //ToDo Dirigir a vista de error
-            System.out.println("Parametro del id de la persona es equivocado: " );
+        ExploradorPeticiones.mostraParametrosPeticion(req);
+
+        String accion = req.getParameter("accion");
+        if(accion.equalsIgnoreCase("getTodas")){
+            List<Persona> personas = this.consultarPersonas();
+            req.setAttribute("personas",personas);
+            this.rdVistaDespliegaPersonas.forward(req,response);
             return;
         }
-        Persona persona = this.consultarPersona(idPersona);
-        if (persona == null) {
-            //ToDo Dirigir a vista de error
-            System.out.println("No hay persona con id= " + idPersona);
+        if(accion.equalsIgnoreCase("back")){
+            this.rdVistaConsultaPersona.forward(req,response);
             return;
         }
-        //Dirigir a vista de CRUD
+        if(accion.equalsIgnoreCase("get")) {
+            int idPersona = this.getIdPersona(req);
+            if (idPersona == -1) {
+                //ToDo Dirigir a vista de error
+                System.out.println("Parametro del id de la persona es equivocado: ");
+                return;
+            }
+            Persona persona = this.consultarPersona(idPersona);
+            if (persona == null) {
+                //ToDo Dirigir a vista de error
+                System.out.println("No hay persona con id= " + idPersona);
+                return;
+            }
+            //Dirigir a vista de CRUD
 //        System.out.println("persona = " + persona);
-        req.setAttribute("persona",persona);
-        this.rd.forward(req,response);
+            req.setAttribute("persona", persona);
+            this.rdVistaCrudPersona.forward(req, response);
+        }
+    }
+
+    private List<Persona> consultarPersonas() {
+        try{
+            return this.gestorBD.getPersonasTodas();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+
     }
 
     private Persona consultarPersona(int idPersona) {

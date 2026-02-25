@@ -42,7 +42,9 @@ public class PersonasControllerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse response)
             throws ServletException, IOException {
-        ExploradorPeticiones.mostraParametrosPeticion(req);
+        System.out.println("PersonasControllerServlet.doGet");
+        System.out.println("Thread.currentThread().threadId() = " + Thread.currentThread().threadId());
+//        ExploradorPeticiones.mostraParametrosPeticion(req);
 
         String accion = req.getParameter("accion");
         if(accion.equalsIgnoreCase("getTodas")){

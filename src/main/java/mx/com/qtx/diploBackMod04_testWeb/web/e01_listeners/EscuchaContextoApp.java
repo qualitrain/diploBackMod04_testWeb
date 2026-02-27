@@ -35,8 +35,8 @@ public class EscuchaContextoApp implements ServletContextListener {
     }
 
     public void contextDestroyed(ServletContextEvent sce){
-        System.out.println("EscuchaContextoApp.contextDestroyed");
-        System.out.println("La última voluntad de esta App es que usted sea feliz");
+//        System.out.println("EscuchaContextoApp.contextDestroyed");
+//        System.out.println("La última voluntad de esta App es que usted sea feliz");
     }
 
     private static void inicializarYpublicarGestoBD(ServletContext ctxApp) {

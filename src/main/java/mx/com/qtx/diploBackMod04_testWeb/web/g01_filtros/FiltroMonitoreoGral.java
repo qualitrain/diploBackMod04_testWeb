@@ -9,7 +9,7 @@ import mx.com.qtx.diploBackMod04_testWeb.web.util.UtilWeb;
 
 import java.io.IOException;
 
-@WebFilter("/*")
+//@WebFilter("/*")
 public class FiltroMonitoreoGral implements Filter {
 
     public FiltroMonitoreoGral() {

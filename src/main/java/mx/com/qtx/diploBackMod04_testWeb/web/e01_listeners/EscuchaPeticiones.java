@@ -6,7 +6,7 @@ import jakarta.servlet.ServletRequestListener;
 import jakarta.servlet.annotation.WebListener;
 import jakarta.servlet.http.HttpServletRequest;
 
-@WebListener
+//@WebListener
 public class EscuchaPeticiones implements ServletRequestListener, ServletRequestAttributeListener {
     @Override
     public void requestInitialized(ServletRequestEvent sre) {
